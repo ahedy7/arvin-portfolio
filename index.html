@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arvin Hedayat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#000;}
+  ::selection{background:#fff;color:#000;}
+  a{color:inherit;}
+  body{background:#000;color:#fff;font-family:'Newsreader',Georgia,serif;min-height:100vh;}
+  .rail{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.25) transparent;}
+  .rail::-webkit-scrollbar{height:6px;}
+  .rail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22);border-radius:3px;}
+  .rail::-webkit-scrollbar-track{background:transparent;}
+  .wrap{padding:clamp(14px,1.8vw,24px) clamp(20px,3vw,56px) clamp(28px,3.2vw,48px);max-width:1760px;margin:0 auto;}
+
+  header{display:flex;align-items:center;gap:clamp(18px,2.6vw,40px);flex-wrap:wrap;}
+  .logo-link{display:flex;align-items:center;flex-shrink:0;text-decoration:none;opacity:0.92;transition:opacity 0.18s ease,transform 0.18s ease;}
+  .logo-link:hover{opacity:1;transform:translateY(-1px);}
+  .logo-link:active{opacity:0.78;transform:translateY(0);}
+  .logo-link img{height:34px;width:auto;display:block;}
+  .rule{flex:1;min-width:50px;height:1px;background:rgba(255,255,255,0.22);margin-left:clamp(-26px,-1.6vw,-10px);}
+  .degree{font-family:'Helvetica Neue',Arial,sans-serif;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#8c8c8c;text-align:right;line-height:1.5;flex-shrink:0;}
+
+  .hero{margin-top:clamp(16px,2vw,28px);max-width:980px;}
+  .hero h1{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:clamp(23px,3vw,44px);line-height:0.99;letter-spacing:-0.03em;margin:0;color:#fff;}
+  .hero p{font-style:italic;font-weight:400;font-size:clamp(13px,1.3vw,17px);line-height:1.32;letter-spacing:-0.01em;color:#e8e8e8;margin:clamp(8px,0.9vw,12px) 0 0;max-width:42ch;text-wrap:balance;}
+
+  .about{margin-top:clamp(20px,2.4vw,32px);display:flex;gap:clamp(24px,3vw,48px);flex-wrap:wrap;align-items:flex-start;}
+  .about-text{flex:2 1 380px;}
+  .about-text p{margin:0;font-size:13.5px;line-height:1.5;color:#cccccc;max-width:62ch;}
+  .about-text p.lede{margin:0 0 clamp(10px,1.1vw,15px);}
+  .about-paras{display:flex;flex-direction:column;gap:clamp(10px,1.1vw,15px);max-width:62ch;}
+  .portrait{flex:1 1 220px;min-width:180px;max-width:290px;margin-top:clamp(-150px,-11vw,-92px);}
+  .portrait img{width:100%;aspect-ratio:3/4.6;object-fit:cover;object-position:center 22%;display:block;
+    -webkit-mask-image:radial-gradient(125% 115% at 52% 42%, #000 58%, rgba(0,0,0,0.55) 80%, transparent 100%);
+    mask-image:radial-gradient(125% 115% at 52% 42%, #000 58%, rgba(0,0,0,0.55) 80%, transparent 100%);}
+
+  .projects{margin-top:clamp(20px,2.4vw,34px);}
+  .projects-head{display:flex;align-items:baseline;gap:14px;margin-bottom:clamp(12px,1.3vw,18px);}
+  .projects-head h2{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:clamp(15px,1.5vw,19px);letter-spacing:-0.01em;margin:0;color:#fff;}
+  .projects-head .count{font-family:'Helvetica Neue',Arial,sans-serif;font-size:9px;letter-spacing:0.16em;color:#8c8c8c;}
+  .projects-head .rule2{flex:1;height:1px;background:rgba(255,255,255,0.12);}
+
+  .rail{display:flex;gap:clamp(12px,1.2vw,18px);overflow-x:auto;padding-bottom:14px;scroll-snap-type:x proximity;cursor:grab;}
+  .tile{flex:0 0 auto;width:clamp(140px,13vw,172px);scroll-snap-align:start;text-decoration:none;color:inherit;}
+  .tile-frame{position:relative;overflow:hidden;background:#0a0a0a;aspect-ratio:1/1;border:1px solid rgba(255,255,255,0.14);}
+  .tile-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform 0.6s cubic-bezier(0.2,0.7,0.2,1);}
+  .tile:hover .tile-frame img{transform:scale(1.045);}
+  .tile-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;
+    background:linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.86));backdrop-filter:blur(1px);
+    opacity:0;transition:opacity 0.32s ease;pointer-events:none;}
+  .tile:hover .tile-overlay{opacity:1;pointer-events:auto;}
+  .tile-overlay p{margin:0;flex:1 1 auto;min-height:0;overflow-y:auto;font-size:10.5px;line-height:1.4;color:#eaeaea;}
+  .tile-overlay .read{flex:0 0 auto;align-self:flex-start;margin-top:10px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;letter-spacing:0.04em;color:#000;background:#fff;padding:6px 11px;font-weight:600;}
+  .tile-meta{margin-top:9px;}
+  .tile-meta .ttitle{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:12.5px;letter-spacing:-0.01em;color:#fff;line-height:1.22;}
+  .tile-meta .tyear{margin-top:4px;font-style:italic;font-size:11px;color:#9a9a9a;line-height:1.4;}
+  .scroll-hint{font-family:'Helvetica Neue',Arial,sans-serif;font-size:9px;letter-spacing:0.14em;color:#5f5f5f;margin-top:9px;text-transform:uppercase;}
+
+  footer.sitefoot{margin-top:clamp(44px,6vw,90px);border-top:1px solid rgba(255,255,255,0.16);padding-top:clamp(28px,3.5vw,46px);}
+  .links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:clamp(24px,3vw,44px);}
+  .links-grid h4{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13.5px;color:#fff;margin:0 0 14px;}
+  .links-grid a.linkrow{display:flex;gap:9px;font-size:13px;color:#9a9a9a;text-decoration:none;margin-bottom:10px;}
+  .links-grid a.linkrow:hover{color:#fff;}
+  .links-grid a.linkrow span{color:#fff;}
+  .links-grid p{margin:0;font-size:12.5px;line-height:1.55;color:#9a9a9a;}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-top:clamp(32px,4vw,56px);}
+  .icon-row{display:flex;gap:9px;}
+  .icon-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.22);font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;color:#bfbfbf;text-decoration:none;}
+  .icon-btn:hover{background:#fff;color:#000;border-color:#fff;}
+  .copyright{font-family:'Helvetica Neue',Arial,sans-serif;font-size:9.5px;letter-spacing:0.1em;color:#5f5f5f;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="logo-link" href="index.html" aria-label="Arvin — home">
+      <img src="./assets/arvin-wordmark.png" alt="Arvin">
+    </a>
+    <div class="rule"></div>
+    <div class="degree">B.A. Statistics</div>
+  </header>
+
+  <section class="hero">
+    <h1>Arvin Hedayat</h1>
+    <p>From spatial data to working, deployed models</p>
+  </section>
+
+  <section class="about">
+    <div class="about-text">
+      <p class="lede">I take messy, real-world data and turn it into tools people use to make decisions. End to end: ingestion, bias correction, modeling, validation, and interactive tools.</p>
+      <div class="about-paras">
+        <p>I'm a fourth-year Statistics student at McGill, with minors in Economics and Urban Studies, originally from the greater Boston area. Recent work includes an autonomous-vehicle pickup and drop-off index for New York City and a public-health pipeline tracking Lone Star tick range expansion, both deployed and self-updating.</p>
+        <p>Each of these started from a conversation rather than a dataset — a researcher, an investor, a friend, someone living the problem. I tend to find the work by listening for it, then building.</p>
+        <p>The shape of the work stays the same across domains: a messy dataset, a real situation, and a working product at the end. The domain changes, the method doesn't, and I'm actively pushing into new ones.</p>
+      </div>
+    </div>
+    <div class="portrait">
+      <img src="./uploads/arvin-portrait-v7.jpeg" alt="Arvin Hedayat">
+    </div>
+  </section>
+
+  <section class="projects">
+    <div class="projects-head">
+      <h2>Projects</h2>
+      <span class="count">04</span>
+      <div class="rule2"></div>
+    </div>
+
+    <div class="rail" id="rail">
+      <a class="tile" href="project.html?p=pudo">
+        <div class="tile-frame">
+          <img src="https://github.com/user-attachments/assets/615e70a0-0fec-4512-b805-e1262dc55a72" alt="NYC AV PUDO Index">
+          <div class="tile-overlay">
+            <p>Where should autonomous vehicles legally stop? Network kernel-density estimation surfaces curb demand; a maximal-coverage solver sites PUDO zones, reweighted for spatial equity. Deployed as an interactive map and generalized to any city.</p>
+            <span class="read">Read →</span>
+          </div>
+        </div>
+        <div class="tile-meta">
+          <div class="ttitle">NYC AV PUDO Index</div>
+          <div class="tyear">2026 — NKDE · MCLP</div>
+        </div>
+      </a>
+
+      <a class="tile" href="project.html?p=tick">
+        <div class="tile-frame">
+          <img src="https://raw.githubusercontent.com/ahedy7/lone-star-tick-spread/master/reports/figures/stage4_frontier_advance.gif" alt="Lone Star Tick Range Expansion">
+          <div class="tile-overlay">
+            <p>A reproducible pipeline tracking the northward spread of Amblyomma americanum. Citizen-science sightings are corrected for observer effort, validated against the CDC, and rendered as a time-scrubbing interactive map. ~66 km / decade.</p>
+            <span class="read">Read →</span>
+          </div>
+        </div>
+        <div class="tile-meta">
+          <div class="ttitle">Lone Star Tick Range Expansion</div>
+          <div class="tyear">2026 — Effort correction</div>
+        </div>
+      </a>
+
+      <a class="tile" href="project.html?p=infra">
+        <div class="tile-frame">
+          <img src="./assets/infra-stress-tile.png" alt="NYC Infrastructure Stress Index">
+          <div class="tile-overlay">
+            <p>A composite, neighborhood-level index ranking where New York's infrastructure is most strained — fusing 311, transit, outage, and flood signals across 262 NTAs, plus a Monte-Carlo event-week layer.</p>
+            <span class="read">Read →</span>
+          </div>
+        </div>
+        <div class="tile-meta">
+          <div class="ttitle">NYC Infrastructure Stress Index</div>
+          <div class="tyear">2026 — Composite index · Plotly Dash</div>
+        </div>
+      </a>
+
+      <a class="tile" href="project.html?p=surveillance">
+        <div class="tile-frame">
+          <img src="./assets/surveillance-tile.png" alt="Who's Accountable for the Sensing City?">
+          <div class="tile-overlay">
+            <p>Cities are deploying interconnected sensing infrastructure — cameras, license plate readers, Bluetooth traffic sensors, transit cards that log every movement — faster than they are building the public legitimacy to sustain it. Through semi-structured interviews with nine Montreal residents, this study finds residents can't name the technologies monitoring them, yet their acceptance turns almost entirely on who holds the data — a problem of accountability and consent, not public education.</p>
+            <span class="read">Read →</span>
+          </div>
+        </div>
+        <div class="tile-meta">
+          <div class="ttitle">Who's Accountable for the Sensing City?</div>
+          <div class="tyear">2026 — Trust, not awareness</div>
+        </div>
+      </a>
+    </div>
+    <div class="scroll-hint">Scroll / drag →</div>
+  </section>
+
+  <footer class="sitefoot">
+    <div class="links-grid">
+      <div>
+        <h4>Contact</h4>
+        <a class="linkrow" href="mailto:arvin.hedayat@mail.mcgill.ca"><span>→</span> Email</a>
+        <a class="linkrow" href="https://www.linkedin.com/in/arvin-hedayat/" target="_blank" rel="noopener"><span>→</span> LinkedIn</a>
+        <a class="linkrow" href="https://github.com/ahedy7" target="_blank" rel="noopener"><span>→</span> GitHub</a>
+      </div>
+      <div>
+        <h4>Now</h4>
+        <p>Based in Montréal, QC — from the greater Boston area. Open to roles &amp; collaborations in geospatial analytics and urban data science.</p>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div class="icon-row">
+        <a class="icon-btn" href="https://github.com/ahedy7" target="_blank" rel="noopener">GH</a>
+        <a class="icon-btn" href="https://www.linkedin.com/in/arvin-hedayat/" target="_blank" rel="noopener">in</a>
+        <a class="icon-btn" href="mailto:arvin.hedayat@mail.mcgill.ca">@</a>
+      </div>
+      <div class="copyright" id="copyright"></div>
+    </div>
+  </footer>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
